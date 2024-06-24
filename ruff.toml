@@ -1,0 +1,35 @@
+exclude = [
+    '.cache/*',
+    'venv',
+    '__init__.py',
+]
+
+line-length = 120
+indent-width = 4
+target-version = 'py312'
+
+[lint]
+select = [  # https://docs.astral.sh/ruff/rules/
+    'E',  # pycodestyle errors
+    'W',  # pycodestyle warnings
+    'F',  # pyflakes
+    'I',  # isort
+    'Q',  # quotes
+    'TID',  # tidy imports
+    'ANN',  # annotations
+    'DJ',  # django
+    'B',  # bugbear
+    'SIM',  # simplify
+]
+ignore = ['B904', 'DJ008', 'DJ001']
+preview = true
+
+[lint.flake8-quotes]
+inline-quotes = 'double'
+
+[format]
+quote-style = 'double'
+
+[lint.isort]
+split-on-trailing-comma = true
+combine-as-imports = true
