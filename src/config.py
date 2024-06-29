@@ -1,13 +1,16 @@
 from pydantic import PostgresDsn, computed_field
 from pydantic_core import MultiHostUrl
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
-    POSTGRES_DATABASE: str
+    POSTGRES_DB: str
     POSTGRES_HOST: str
+    POSTGRES_PORT: int
 
     @computed_field
     @property
@@ -18,6 +21,7 @@ class Settings(BaseSettings):
             password=self.POSTGRES_PASSWORD,
             host=self.POSTGRES_HOST,
             path=self.POSTGRES_DB,
+            port=self.POSTGRES_PORT,
         )
 
     @computed_field
