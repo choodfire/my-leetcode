@@ -26,9 +26,7 @@ async def get_result(result_id: int, session: AsyncSession = Depends(sessionmana
 
 
 @router.post("/", response_model=ResultRead)
-async def create_result(
-    result_create: ResultWrite, session: AsyncSession = Depends(sessionmanager.session)
-) -> Result:
+async def create_result(result_create: ResultWrite, session: AsyncSession = Depends(sessionmanager.session)) -> Result:
     from datetime import timedelta
 
     result = Result(**result_create.model_dump(), user_id=1, time=timedelta(minutes=1, seconds=1))  # TODO: Temporary
