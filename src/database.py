@@ -31,9 +31,9 @@ class DatabaseSessionManager:
         )
 
     async def session(self) -> AsyncSession:
-        async with self.sessionmaker() as session:
-            yield session
-            await session.close()
+        session = self.get_scoped_session()
+        yield session
+        await session.close()
 
 
 sessionmanager = DatabaseSessionManager()

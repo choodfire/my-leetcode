@@ -16,7 +16,7 @@ class ResultRead(ResultWrite):
     created_at: datetime
     user_id: int
 
-    @field_validator('time')
+    @field_validator("time")
     @classmethod
     def format_time(cls, value: timedelta) -> str:
         return str(value)

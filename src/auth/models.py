@@ -4,7 +4,6 @@ from pydantic import SecretStr
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.models import Base
-from src.results.models import Result
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -14,7 +13,7 @@ class User(Base):
     email: Mapped[str | None] = mapped_column(unique=True)
     first_name: Mapped[str]
     last_name: Mapped[str | None]
-    results: Mapped[list["Result"]] = relationship("Result", back_populates="user")
+    results = relationship("Result", back_populates="users")
     _password: Mapped[bytes]
 
     @property

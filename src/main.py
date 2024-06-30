@@ -6,7 +6,6 @@ from fastapi import FastAPI
 from src.auth import models  # noqa: F401
 from src.database import sessionmanager
 from src.models import Base
-from src.results import models  # noqa: F401, F811  # Will be fixed with router
 from src.results.router import router as results_router
 
 
