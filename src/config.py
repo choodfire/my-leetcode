@@ -6,22 +6,22 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_DB: str
-    POSTGRES_HOST: str
-    POSTGRES_PORT: int
+    DB_USER: str
+    DB_PASSWORD: str
+    DB_NAME: str
+    DB_HOST: str
+    DB_PORT: int
 
     @computed_field
     @property
     def asyncpg_url(self) -> PostgresDsn:
         return MultiHostUrl.build(
             scheme="postgresql+asyncpg",
-            username=self.POSTGRES_USER,
-            password=self.POSTGRES_PASSWORD,
-            host=self.POSTGRES_HOST,
-            path=self.POSTGRES_DB,
-            port=self.POSTGRES_PORT,
+            username=self.DB_USER,
+            password=self.DB_PASSWORD,
+            host=self.DB_HOST,
+            path=self.DB_NAME,
+            port=self.DB_PORT,
         )
 
     @computed_field
@@ -29,10 +29,10 @@ class Settings(BaseSettings):
     def postgres_url(self) -> PostgresDsn:
         return MultiHostUrl.build(
             scheme="postgres",
-            username=self.POSTGRES_USER,
-            password=self.POSTGRES_PASSWORD,
-            host=self.POSTGRES_HOST,
-            path=self.POSTGRES_DB,
+            username=self.DB_USER,
+            password=self.DB_PASSWORD,
+            host=self.DB_HOST,
+            path=self.DB_NAME,
         )
 
 

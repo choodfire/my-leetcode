@@ -4,9 +4,10 @@ import bcrypt
 from passlib.context import CryptContext
 from pydantic import SecretStr
 from sqlalchemy import UUID, LargeBinary, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.models import Base
+from src.results.models import Result
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -16,6 +17,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String, nullable=False, unique=True)
     first_name: Mapped[str] = mapped_column(String, nullable=False)
     last_name: Mapped[str] = mapped_column(String, nullable=False)
+    results: Mapped[list["Result"]] = relationship('Result', back_populates="users")
     _password: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
 
     @property
