@@ -27,6 +27,9 @@ preview = true
 [lint.flake8-quotes]
 inline-quotes = "double"
 
+[lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends"]
+
 [format]
 quote-style = "double"
 

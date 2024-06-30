@@ -14,7 +14,7 @@ class User(Base):
     email: Mapped[str | None] = mapped_column(unique=True)
     first_name: Mapped[str]
     last_name: Mapped[str | None]
-    results: Mapped[list["Result"]] = relationship("Result", back_populates="users")
+    results: Mapped[list["Result"]] = relationship("Result", back_populates="user")
     _password: Mapped[bytes]
 
     @property
