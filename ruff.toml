@@ -21,7 +21,7 @@ select = [  # https://docs.astral.sh/ruff/rules/
     "B",  # bugbear
     "SIM",  # simplify
 ]
-ignore = ["B904", "DJ008", "DJ001"]
+ignore = []
 preview = true
 
 [lint.flake8-quotes]
