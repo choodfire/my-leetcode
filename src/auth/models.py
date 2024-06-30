@@ -1,7 +1,6 @@
 import bcrypt
 from passlib.context import CryptContext
 from pydantic import SecretStr
-from sqlalchemy import LargeBinary, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.models import Base
