@@ -9,7 +9,7 @@ from src.results.consts import Language
 
 class Result(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
-    user = relationship("User", back_populates="results")
+    user: Mapped["User"] = relationship(back_populates="results")  # noqa: F821
     created_at: Mapped[datetime] = mapped_column(server_default=text("TIMEZONE('utc', now())"))
     time: Mapped[timedelta]
     language: Mapped[Language]

@@ -13,7 +13,7 @@ class User(Base):
     email: Mapped[str | None] = mapped_column(unique=True)
     first_name: Mapped[str]
     last_name: Mapped[str | None]
-    results = relationship("Result", back_populates="users")
+    results: Mapped[list["Result"]] = relationship("Result", back_populates="user")  # noqa: F821
     _password: Mapped[bytes]
 
     @property
