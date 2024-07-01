@@ -20,8 +20,3 @@ async def lifespan(_application: FastAPI) -> AsyncGenerator:
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(results_router)
-
-
-@app.get("/")
-def index() -> dict:
-    return {"Response": "Hello, World!"}

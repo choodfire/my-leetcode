@@ -22,3 +22,43 @@ pre-commit = "^3.7.1"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+exclude = [
+    ".cache/*",
+    ".venv",
+    "__init__.py",
+]
+
+line-length = 120
+indent-width = 4
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [  # https://docs.astral.sh/ruff/rules/
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "Q",  # quotes
+    "TID",  # tidy imports
+    "ANN",  # annotations
+    "DJ",  # django
+    "B",  # bugbear
+    "SIM",  # simplify
+]
+ignore = []
+preview = true
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "double"
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.ruff.lint.isort]
+split-on-trailing-comma = true
+combine-as-imports = true
