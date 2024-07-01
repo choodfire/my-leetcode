@@ -1,7 +1,7 @@
 import enum
 
 
-class Language(enum.Enum):
+class Language(str, enum.Enum):
     PYTHON = "PYTHON"
     GO = "GO"
     JAVASCRIPT = "JAVASCRIPT"
