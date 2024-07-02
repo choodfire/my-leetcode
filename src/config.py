@@ -4,7 +4,7 @@ from pydantic import PostgresDsn, computed_field
 from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from src import consts
+BASE_DIR: Path = Path(__file__).parent.parent
 
 
 class Settings(BaseSettings):
@@ -16,8 +16,8 @@ class Settings(BaseSettings):
     DB_HOST: str
     DB_PORT: int
 
-    private_key_path: Path = consts.BASE_DIR / "certs" / "private.pem"
-    public_key_path: Path = consts.BASE_DIR / "certs" / "public.pem"
+    private_key_path: Path = BASE_DIR / "certs" / "private.pem"
+    public_key_path: Path = BASE_DIR / "certs" / "public.pem"
     algorithm: str = "RS256"
     access_token_expire_minutes: int = 15
     refresh_token_expire_days: int = 30
