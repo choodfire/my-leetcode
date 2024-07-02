@@ -4,13 +4,11 @@ from src.models import Base
 
 
 class User(Base):
-    username: Mapped[str]
-    email: Mapped[str | None] = mapped_column(unique=True)
+    username: Mapped[str] = mapped_column(unique=True)
+    password: Mapped[bytes]
 
     first_name: Mapped[str]
-    last_name: Mapped[str | None]
-
-    _password: Mapped[bytes]
+    last_name: Mapped[str]
 
     is_active: Mapped[bool]
     is_admin: Mapped[bool]

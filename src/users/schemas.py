@@ -1,18 +1,19 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 
 
-class UserCreate(BaseModel):
+class UserLogin(BaseModel):
     username: str
-    email: EmailStr | None
-    first_name: str
-    last_name: str | None
     password: str
+
+
+class UserCreate(UserLogin):
+    first_name: str
+    last_name: str
 
 
 class UserRead(BaseModel):
     username: str
-    email: EmailStr | None
     first_name: str
-    last_name: str | None
+    last_name: str
     is_active: bool
     is_admin: bool
