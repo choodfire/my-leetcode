@@ -3,6 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
+import src.users.models
 from src.results import models, schemas
 
 
@@ -19,11 +20,13 @@ async def retrieve_result(session: AsyncSession, result_id: int) -> models.Resul
     return res
 
 
-async def create_result(session: AsyncSession, result_create: schemas.ResultWrite) -> models.Result:
+async def create_result(
+    session: AsyncSession, result_create: schemas.ResultWrite, user: src.users.models.User
+) -> models.Result:
     from datetime import timedelta
 
     result = models.Result(
-        **result_create.model_dump(), user_id=1, time=timedelta(minutes=1, seconds=1)
+        **result_create.model_dump(), user_id=user.id, time=timedelta(minutes=1, seconds=1)
     )  # TODO: Temporary
     session.add(result)
     await session.commit()

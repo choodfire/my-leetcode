@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+import src.users.schemas
+from src.auth.dependencies import get_user
 from src.database import sessionmanager
 from src.results import models, schemas, services
 
@@ -19,6 +21,8 @@ async def retrieve_result(result_id: int, session: AsyncSession = Depends(sessio
 
 @router.post("/", response_model=schemas.ResultRead)
 async def create_result(
-    result_create: schemas.ResultWrite, session: AsyncSession = Depends(sessionmanager.session)
+    result_create: schemas.ResultWrite,
+    session: AsyncSession = Depends(sessionmanager.session),
+    user: src.users.schemas.UserCreate = Depends(get_user),
 ) -> models.Result:
-    return await services.create_result(session=session, result_create=result_create)
+    return await services.create_result(session=session, result_create=result_create, user=user)
