@@ -13,7 +13,7 @@ router = APIRouter(tags=["auth"])
 @router.post("/register/", response_model=Token, status_code=status.HTTP_201_CREATED)
 async def register(
     user_create: schemas.UserCreate = Depends(dependencies.check_registration),
-    session: AsyncSession = Depends(sessionmanager.get_scoped_session),
+    session: AsyncSession = Depends(sessionmanager.session),
 ) -> Token:
     user = await services.register(session=session, user_create=user_create)
     return await utils.create_auth_tokens(user)
