@@ -1,8 +1,8 @@
-from auth.dependencies import get_token_payload
 from fastapi import Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.auth.dependencies import get_token_payload
 from src.database import sessionmanager
 from src.users import models
 
