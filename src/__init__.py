@@ -14,8 +14,6 @@ from src.results.router import router as results_router
 @asynccontextmanager
 async def lifespan(_application: FastAPI) -> AsyncGenerator:
     # Startup
-    alembic_cfg = Config("alembic.ini")
-    command.upgrade(alembic_cfg, "head")
     yield
     # Shutdown
 
