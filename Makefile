@@ -4,6 +4,9 @@ run:
 check:
 	ruff check && ruff format --check
 
+fix:
+	ruff format && ruff check --fix
+
 migration:
 	alembic revision --m="${NAME}" --autogenerate
 
