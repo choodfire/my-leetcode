@@ -29,6 +29,7 @@ exclude = [
     ".cache/*",
     ".venv",
     "__init__.py",
+    "alembic/",
 ]
 
 line-length = 120

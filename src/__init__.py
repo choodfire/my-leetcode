@@ -1,5 +1,7 @@
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
+from alembic.config import Config
+from alembic import command
 
 from fastapi import FastAPI
 
@@ -12,8 +14,8 @@ from src.results.router import router as results_router
 @asynccontextmanager
 async def lifespan(_application: FastAPI) -> AsyncGenerator:
     # Startup
-    async with sessionmanager.engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    alembic_cfg = Config("alembic.ini")
+    command.upgrade(alembic_cfg, "head")
     yield
     # Shutdown
 
