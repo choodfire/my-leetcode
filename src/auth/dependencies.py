@@ -1,10 +1,12 @@
 from fastapi import Depends, Form, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jwt.exceptions import InvalidTokenError
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
 from src.auth import services, utils
+from src.auth.consts import JWTTokenType
 from src.database import sessionmanager
 from src.users import models, schemas
 
@@ -46,3 +48,27 @@ async def get_token_payload(token: str = Depends(oauth2)) -> dict:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token") from None
 
     return payload
+
+
+async def get_user_from_refresh_token(
+    session: AsyncSession = Depends(sessionmanager.session),
+    payload: dict = Depends(get_token_payload),
+) -> models.User:
+    user_id: str | None = payload.get("sub")
+
+    if payload["type"] != JWTTokenType.REFRESH:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+
+    if not user_id:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    stmt = select(models.User).filter(models.User.id == user_id)
+    result = await session.execute(stmt)
+    user = result.scalars().first()
+
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+
+    if not user.is_active:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+
+    return user

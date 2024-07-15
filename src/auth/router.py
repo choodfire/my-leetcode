@@ -22,3 +22,8 @@ async def register(
 @router.post("/login/", response_model=Token, status_code=status.HTTP_200_OK)
 async def login(user: models.User = Depends(dependencies.check_login)) -> Token:
     return await utils.create_auth_tokens(user)
+
+
+@router.post("/refresh/", response_model=Token, status_code=status.HTTP_200_OK, response_model_exclude_none=True)
+async def refresh(user: models.User = Depends(dependencies.get_user_from_refresh_token)) -> Token:
+    return await utils.create_new_refresh_token(user)

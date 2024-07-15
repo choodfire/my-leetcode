@@ -69,8 +69,12 @@ def create_refresh_token(user: models.User) -> str:
         "type": consts.JWTTokenType.REFRESH,
         "sub": user.id,
     }
-    return encode_jwt(payload=payload)
+    return encode_jwt(payload=payload, expire_minutes=settings.refresh_token_expire_days * 60 * 24)
 
 
 async def create_auth_tokens(user: models.User) -> schemas.Token:
     return schemas.Token(access_token=create_access_token(user), refresh_token=create_refresh_token(user))
+
+
+async def create_new_refresh_token(user: models.User) -> schemas.Token:
+    return schemas.Token(access_token=create_access_token(user))
